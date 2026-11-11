@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>鸡兔同笼 · 小X的魔法动物农场 互动课</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",sans-serif;background:#fdf6e7;color:#3b2f22;line-height:1.6;-webkit-text-size-adjust:100%;overflow-x:hidden}
+.wrap{max-width:520px;margin:0 auto;padding:0 14px 20px}
+/* hero */
+.hero{background:linear-gradient(180deg,#7cc7f2 0%,#bfe6fb 55%,#d9f2c4 56%,#a8dc84 100%);padding:22px 16px 26px;text-align:center;position:relative;overflow:hidden;border-radius:0 0 26px 26px}
+.hero .sun{position:absolute;right:-18px;top:-18px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,#fff6b0 0%,#ffd84d 60%,rgba(255,216,77,0) 72%)}
+.badge{display:inline-block;background:#fff;border:2px solid #e9a23b;color:#b4661a;border-radius:20px;padding:2px 12px;font-size:12px;font-weight:700}
+.board{display:inline-block;margin:12px auto 6px;background:linear-gradient(#c98a4b,#a86a33);border:3px solid #7a4a1f;border-radius:14px;padding:6px 18px;color:#fff6dc;font-weight:800;font-size:15px;box-shadow:0 4px 0 #6b3e17;position:relative;z-index:1}
+.title{font-size:44px;font-weight:900;margin:6px 0 2px;color:#f0531d;letter-spacing:4px;text-shadow:3px 3px 0 #fff,-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,0 6px 0 rgba(122,74,31,.35);position:relative;z-index:1}
+.sub{font-size:15px;font-weight:700;color:#2f5d1f;position:relative;z-index:1}
+.hero-ani{font-size:34px;margin-top:8px;position:relative;z-index:1}
+.hero-ani span{display:inline-block;animation:hop 1.6s ease-in-out infinite}
+.hero-ani span:nth-child(2){animation-delay:.2s}.hero-ani span:nth-child(3){animation-delay:.4s}.hero-ani span:nth-child(4){animation-delay:.6s}.hero-ani span:nth-child(5){animation-delay:.8s}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+/* nav */
+.nav{position:-webkit-sticky;position:sticky;top:0;z-index:20;background:rgba(253,246,231,.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:8px 0;margin:0 -14px 4px;display:flex;justify-content:center}
+.nav a{flex:1;max-width:150px;margin:0 4px;text-align:center;text-decoration:none;color:#7a4a1f;font-weight:700;font-size:14px;background:#fff;border:2px solid #f0d3a2;border-radius:18px;padding:6px 0}
+.nav a.act{background:#ff8a3d;color:#fff;border-color:#ff8a3d}
+/* cards */
+.sec{padding-top:6px}
+.sec-h{display:flex;align-items:center;margin:16px 0 10px}
+.sec-h .num{width:30px;height:30px;border-radius:50%;background:#ff8a3d;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;margin-right:8px;flex:none;box-shadow:0 3px 0 #d0651f}
+.sec-h h2{margin:0;font-size:20px;font-weight:900;color:#5a3412}
+.card{background:#fff;border-radius:18px;padding:14px;box-shadow:0 4px 0 #f0d3a2,0 6px 18px rgba(160,110,40,.12);margin-bottom:14px}
+.letter{background:#fff8e6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='28'%3E%3Cline x1='0' y1='27' x2='10' y2='27' stroke='%23f3dfb6' stroke-width='1'/%3E%3C/svg%3E");border:2px dashed #e0b56c}
+.letter h3{margin:0 0 6px;color:#c0392b;font-size:17px;text-align:center}
+.letter p{margin:0;font-size:15px;line-height:28px}
+.hl{color:#e8431b;font-weight:900;font-size:1.15em}
+.chat{display:flex;align-items:flex-start;margin:10px 0}
+.chat .av{font-size:28px;flex:none;width:40px;height:40px;border-radius:50%;background:#fff1dc;display:flex;align-items:center;justify-content:center;margin-right:8px;border:2px solid #f5c88a}
+.chat .bub{background:#fff;border:2px solid #f0d3a2;border-radius:4px 16px 16px 16px;padding:7px 11px;font-size:14px}
+.chat.r{flex-direction:row-reverse}.chat.r .av{margin:0 0 0 8px}.chat.r .bub{border-radius:16px 4px 16px 16px;background:#eef9e6;border-color:#bfe3a6}
+.know{display:flex}
+.know div{flex:1;text-align:center;background:#fff7ec;border-radius:14px;padding:10px 4px;margin:0 4px;font-size:15px;font-weight:700}
+.know .em{font-size:36px;display:block;line-height:1.2}
+.guess{display:flex;margin-top:10px}
+.guess button{flex:1;margin:0 4px;border:2px dashed #f0a35c;background:#fffaf2;border-radius:14px;padding:8px 4px;font-size:14px;color:#5a3412;font-family:inherit}
+.guess button .row{display:block;font-size:17px;letter-spacing:-2px}
+.guess button b{color:#e8431b}
+/* demo */
+.stage{background:linear-gradient(#e9f7ff,#f6fff0);border:2px solid #cfe9c0;border-radius:16px;padding:10px 6px 6px;min-height:150px;position:relative}
+.qline{text-align:center;font-weight:800;font-size:16px;color:#3b5b22;margin-bottom:4px}
+.pen{display:flex;flex-wrap:wrap;justify-content:center;min-height:96px;padding:2px 0}
+.ani{position:relative;width:48px;height:92px;margin:0 1px}
+.ani .hd{position:absolute;left:8px;top:16px;width:32px;height:32px;border:3px solid #4a3a2a;border-radius:50%;background:#fff;-webkit-transform:scale(0);transform:scale(0);transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .3s}
+.ani.on .hd{-webkit-transform:scale(1);transform:scale(1)}
+.ani .eye{position:absolute;top:10px;width:4px;height:4px;border-radius:50%;background:#4a3a2a;opacity:0;transition:opacity .3s}
+.ani .eye.l{left:8px}.ani .eye.r{left:16px}
+.ani .bk{position:absolute;left:10px;top:16px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid #f39c12;opacity:0;transition:opacity .3s}
+.ani.l2 .eye,.ani.l2 .bk{opacity:1}
+.ani.rb .bk{opacity:0}
+.ani.rb .hd{background:#ffeef3;border-color:#d9577a}
+.ani .ear{position:absolute;top:0;width:10px;height:22px;border:3px solid #d9577a;background:#ffdbe5;border-radius:50% 50% 45% 45%;opacity:0;-webkit-transform:translateY(10px) scale(.4);transform:translateY(10px) scale(.4);transition:all .35s cubic-bezier(.3,1.6,.5,1)}
+.ani .ear.l{left:13px}.ani .ear.r{left:25px}
+.ani.rb .ear{opacity:1;-webkit-transform:none;transform:none}
+.ani .lg{position:absolute;top:48px;width:3px;height:0;background:#4a3a2a;border-radius:2px;transition:height .3s}
+.ani .lg.a{left:18px}.ani .lg.b{left:27px}
+.ani .lg.c{left:10px;background:#e8431b}.ani .lg.d{left:35px;background:#e8431b}
+.ani.l2 .lg.a,.ani.l2 .lg.b{height:18px}
+.ani.rb .lg.c,.ani.rb .lg.d{height:18px}
+.ani .tg{position:absolute;left:0;right:0;top:68px;text-align:center;font-size:17px;opacity:0;transition:opacity .3s}
+.ani.l2 .tg{opacity:1}
+.ani.pop{-webkit-animation:pop .45s;animation:pop .45s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25) rotate(-6deg)}100%{transform:scale(1)}}
+@-webkit-keyframes pop{0%{-webkit-transform:scale(1)}40%{-webkit-transform:scale(1.25) rotate(-6deg)}100%{-webkit-transform:scale(1)}}
+.meter{display:flex;align-items:center;margin:4px 6px 2px;font-size:13px;font-weight:700;color:#5a3412}
+.meter .bar{flex:1;height:12px;border-radius:8px;background:#f1e5d1;margin:0 8px;overflow:hidden;position:relative}
+.meter .fill{height:100%;width:0;background:linear-gradient(90deg,#7bc94f,#3fa34d);border-radius:8px;transition:width .4s}
+.meter .fill.part{background:linear-gradient(90deg,#ffb54d,#ff8a3d)}
+.miss{display:flex;flex-wrap:wrap;justify-content:center;min-height:0;margin:2px 4px}
+.miss i{display:block;width:6px;height:18px;margin:2px 3px;border-radius:3px;border:2px dashed #e8431b;transition:all .3s}
+.miss i.f{background:#e8431b;border-style:solid}
+.say{display:flex;align-items:flex-start;margin:10px 0 4px}
+.say .av{font-size:26px;flex:none;width:38px;height:38px;border-radius:50%;background:#fff1dc;border:2px solid #f5c88a;display:flex;align-items:center;justify-content:center;margin-right:8px}
+.say .bub{flex:1;background:#fff8e6;border:2px solid #f5c88a;border-radius:4px 16px 16px 16px;padding:8px 11px;font-size:15px;min-height:46px}
+.steps{display:flex;justify-content:center;margin:8px 0 2px}
+.steps i{display:block;width:8px;height:8px;border-radius:50%;background:#ecd9bb;margin:0 3px;transition:all .3s}
+.steps i.on{background:#ff8a3d;width:18px;border-radius:5px}
+.ctrl{display:flex;margin-top:8px}
+.btn{font-family:inherit;border:0;border-radius:14px;font-size:16px;font-weight:800;padding:11px 0;flex:1;margin:0 4px;color:#fff;background:#ff8a3d;box-shadow:0 4px 0 #d0651f;cursor:pointer}
+.btn:active{-webkit-transform:translateY(3px);transform:translateY(3px);box-shadow:0 1px 0 #d0651f}
+.btn.g{background:#fff;color:#a35a17;box-shadow:0 4px 0 #f0d3a2;border:2px solid #f0d3a2}
+.btn.gr{background:#4cae4f;box-shadow:0 4px 0 #34843a}
+.btn[disabled]{opacity:.45}
+.tune{display:flex;margin-top:12px}
+.tune .box{flex:1;margin:0 4px;background:#fff7ec;border-radius:14px;padding:8px 6px;text-align:center}
+.tune .lab{font-size:13px;color:#8a5a2a;font-weight:700}
+.stp{display:flex;align-items:center;justify-content:center;margin-top:4px}
+.stp button{width:38px;height:38px;border-radius:50%;border:0;background:#ffd9b0;color:#a35a17;font-size:22px;font-weight:900;font-family:inherit;line-height:1}
+.stp b{min-width:42px;font-size:24px;color:#e8431b}
+.presets{display:flex;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.presets button{font-family:inherit;font-size:13px;border:2px solid #cfe9c0;background:#f3fbec;color:#3b5b22;border-radius:16px;padding:4px 10px;margin:3px;font-weight:700}
+.presets button.act{background:#4cae4f;color:#fff;border-color:#4cae4f}
+.eq{margin-top:10px;background:#f7fbff;border:2px solid #cde3f5;border-radius:14px;padding:8px 12px;font-size:15px}
+.eq .t{font-weight:900;color:#2a6aa0;font-size:14px;margin-bottom:2px}
+.eq div.l{opacity:.25;transition:opacity .3s}
+.eq div.l.on{opacity:1}
+.eq .ok{color:#3fa34d;font-weight:900}
+.chant{background:linear-gradient(135deg,#fff3c4,#ffe0b8);border:2px solid #f5c26b}
+.chant h3{margin:0 0 6px;font-size:16px;color:#b4561a;text-align:center}
+.chant p{margin:2px 0;padding:4px 10px;border-radius:10px;font-size:16px;font-weight:800;text-align:center;transition:all .3s;color:#7a4a1f}
+.chant p.on{background:#ff8a3d;color:#fff;-webkit-transform:scale(1.03);transform:scale(1.03)}
+.flow{display:flex;justify-content:center;align-items:center;margin:4px 0 8px;font-weight:900;font-size:14px}
+.flow span{background:#fff;border:2px solid #f5c26b;border-radius:12px;padding:3px 9px;color:#b4561a;transition:all .3s}
+.flow span.on{background:#e8431b;border-color:#e8431b;color:#fff}
+.flow em{font-style:normal;color:#e8431b;margin:0 4px}
+/* practice */
+.tabs{display:flex;background:#f6e7cf;border-radius:16px;padding:4px;margin-bottom:12px}
+.tabs button{flex:1;font-family:inherit;border:0;background:transparent;border-radius:12px;padding:8px 0;font-size:15px;font-weight:800;color:#8a5a2a}
+.tabs button.act{background:#fff;color:#e8431b;box-shadow:0 2px 6px rgba(160,110,40,.2)}
+.tabs small{display:block;font-size:11px;font-weight:600;opacity:.8}
+.q{border-left:5px solid #ff8a3d}
+.q .qh{display:flex;align-items:center;margin-bottom:6px}
+.q .qn{background:#ffd84d;color:#7a4a1f;font-weight:900;border-radius:10px;padding:0 9px;margin-right:8px;font-size:14px}
+.q .qtag{font-size:12px;color:#8a5a2a;background:#fff3e2;border-radius:8px;padding:1px 8px}
+.q .qt{font-size:16px;font-weight:700;margin:4px 0 10px}
+.ans{display:flex;align-items:center;flex-wrap:wrap}
+.ans label{display:flex;align-items:center;margin:0 10px 6px 0;font-weight:700;font-size:15px}
+.ans input{width:58px;height:40px;margin-left:6px;border:2px solid #f0d3a2;border-radius:10px;font-size:18px;text-align:center;font-family:inherit;color:#e8431b;font-weight:800;background:#fffaf2;-webkit-appearance:none;appearance:none}
+.ans input:focus{outline:none;border-color:#ff8a3d}
+.ans .btn{flex:none;padding:8px 16px;font-size:15px;margin:0 0 6px}
+.fb{font-size:14px;font-weight:700;min-height:0;margin:2px 0}
+.fb.ok{color:#3fa34d}.fb.no{color:#d9534f}
+.qbtns{display:flex;margin-top:6px}
+.qbtns button{flex:1;margin:0 3px;font-family:inherit;font-size:14px;font-weight:800;border-radius:12px;padding:8px 0;border:2px solid #cde3f5;background:#f2f8ff;color:#2a6aa0}
+.qbtns button.sol{border-color:#f5c26b;background:#fff7e0;color:#b4561a}
+.qbtns button[disabled]{opacity:.4}
+.hint,.solution{display:none;margin-top:8px;border-radius:12px;padding:8px 12px;font-size:14px}
+.hint{background:#f2f8ff;border:1px dashed #9cc6ea}
+.solution{background:#fff7e0;border:1px dashed #f5c26b}
+.hint.show,.solution.show{display:block;-webkit-animation:fade .35s;animation:fade .35s}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.solution ol{margin:4px 0;padding-left:20px}
+.solution li{margin:2px 0}
+.prog{text-align:center;font-size:14px;color:#8a5a2a;margin:-4px 0 10px;font-weight:700}
+.stars{color:#ffb400;letter-spacing:2px}
+.tip{font-size:13px;color:#8a5a2a;text-align:center;margin:4px 0 0}
+footer{text-align:center;color:#b39470;font-size:12px;padding:18px 0 calc(18px + env(safe-area-inset-bottom))}
+.toast{position:fixed;left:50%;top:40%;-webkit-transform:translate(-50%,-50%) scale(.6);transform:translate(-50%,-50%) scale(.6);background:rgba(59,47,34,.88);color:#fff;border-radius:18px;padding:14px 22px;font-size:18px;font-weight:800;opacity:0;pointer-events:none;transition:all .3s;z-index:50;text-align:center}
+.toast.show{opacity:1;-webkit-transform:translate(-50%,-50%) scale(1);transform:translate(-50%,-50%) scale(1)}
+.confetti{position:fixed;top:-20px;font-size:22px;z-index:49;pointer-events:none;-webkit-animation:fall 1.6s linear forwards;animation:fall 1.6s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.6}}
+@-webkit-keyframes fall{to{-webkit-transform:translateY(110vh) rotate(540deg);opacity:.6}}
+@media (max-width:360px){.title{font-size:38px}.ani{width:44px}.ani .hd{left:6px}.ani .ear.l{left:11px}.ani .ear.r{left:23px}.ani .lg.a{left:16px}.ani .lg.b{left:25px}.ani .lg.c{left:8px}.ani .lg.d{left:33px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="sun"></div>
+  <span class="badge">二年级 · 数学思维</span><br>
+  <div class="board">小X的魔法动物农场</div>
+  <div class="title">鸡兔同笼</div>
+  <div class="sub">互动动画课 · 跟着小X学「三步魔法」</div>
+  <div class="hero-ani"><span>🐔</span><span>🐰</span><span>🦊</span><span>🐰</span><span>🐔</span></div>
+</div>
+
+<div class="wrap">
+  <nav class="nav" id="nav">
+    <a href="#s1" class="act">① 求救信</a>
+    <a href="#s2">② 动画讲解</a>
+    <a href="#s3">③ 分层练习</a>
+  </nav>
+
+  <!-- 1 intro -->
+  <section class="sec" id="s1">
+    <div class="sec-h"><span class="num">1</span><h2>农场主的求救信</h2></div>
+    <div class="card letter">
+      <h3>✉️ 农场主的求救信</h3>
+      <p>小可爱老师和小X：<br>我的动物屋里有一些小鸡和小兔！我只知道一共有 <span class="hl">5</span> 个脑袋、<span class="hl">14</span> 条腿，但是我不知道有几只鸡？几只兔？请你们帮帮我！👴</p>
+    </div>
+    <div class="card">
+      <div class="chat"><div class="av">👧</div><div class="bub">小X，我们先来认识一下这两位朋友！</div></div>
+      <div class="know">
+        <div><span class="em">🐔</span>小鸡有 <span class="hl">2</span> 条腿</div>
+        <div><span class="em">🐰</span>小兔有 <span class="hl">4</span> 条腿</div>
+      </div>
+      <div class="chat r"><div class="av">🦊</div><div class="bub">想一想：5 个脑袋可能有哪些情况？先猜一猜，再点一点看答案！</div></div>
+      <div class="guess">
+        <button data-a="10"><span class="row">🐔🐔🐔🐔🐔</span>5 只鸡：<b>？</b> 条腿</button>
+        <button data-a="20"><span class="row">🐰🐰🐰🐰🐰</span>5 只兔：<b>？</b> 条腿</button>
+      </div>
+      <p class="tip">5 只鸡和 5 只兔腿数不一样！那 14 条腿到底是几鸡几兔呢？👇</p>
+    </div>
+  </section>
+
+  <!-- 2 demo -->
+  <section class="sec" id="s2">
+    <div class="sec-h"><span class="num">2</span><h2>动画讲解：三步魔法</h2></div>
+    <div class="card">
+      <div class="flow"><span id="f1">画头</span><em>→</em><span id="f2">画腿</span><em>→</em><span id="f3">补腿</span></div>
+      <div class="stage">
+        <div class="qline" id="qline">一共 5 个脑袋，14 条腿</div>
+        <div class="pen" id="pen"></div>
+        <div class="meter"><span>腿数</span><div class="bar"><div class="fill" id="fill"></div></div><span id="mtxt">0 / 14</span></div>
+        <div class="miss" id="miss"></div>
+      </div>
+      <div class="say"><div class="av" id="who">👧</div><div class="bub" id="msg"></div></div>
+      <div class="steps" id="dots"></div>
+      <div class="ctrl">
+        <button class="btn g" id="prev">◀ 上一步</button>
+        <button class="btn gr" id="play">▶ 自动</button>
+        <button class="btn" id="next">下一步 ▶</button>
+      </div>
+
+      <div class="eq" id="eq">
+        <div class="t">📝 算式小贴士（列出来就是这样）</div>
+        <div class="l" id="e1"></div>
+        <div class="l" id="e2"></div>
+        <div class="l" id="e3"></div>
+        <div class="l" id="e4"></div>
+        <div class="l" id="e5"></div>
+      </div>
+
+      <div class="tune">
+        <div class="box"><div class="lab">🔵 脑袋（只）</div><div class="stp"><button id="hm">−</button><b id="hv">5</b><button id="hp">+</button></div></div>
+        <div class="box"><div class="lab">🦵 腿（条）</div><div class="stp"><button id="lm">−</button><b id="lv">14</b><button id="lp">+</button></div></div>
+      </div>
+      <div class="presets" id="presets">
+        <button data-h="5" data-l="14">例题 5头14腿</button>
+        <button data-h="6" data-l="14">6头14腿</button>
+        <button data-h="7" data-l="18">7头18腿</button>
+        <button data-h="9" data-l="24">9头24腿</button>
+      </div>
+      <p class="tip">自己改改脑袋和腿的数量，看看动画会怎么变 ✨</p>
+    </div>
+    <div class="card chant">
+      <h3>🦊 小X的魔法口诀</h3>
+      <p id="c1">几个头，画几个圈；</p>
+      <p id="c2">每个圈，先画两条腿；</p>
+      <p id="c3">少几条，再来补；</p>
+      <p id="c4">每补两条，一只兔！</p>
+    </div>
+  </section>
+
+  <!-- 3 practice -->
+  <section class="sec" id="s3">
+    <div class="sec-h"><span class="num">3</span><h2>分层练习</h2></div>
+    <div class="tabs" id="tabs">
+      <button data-lv="0" class="act">🌱 基础<small>鸡兔同笼</small></button>
+      <button data-lv="1">🌿 提高<small>生活中的鸡兔同笼</small></button>
+      <button data-lv="2">🌳 拓展<small>换个角度想</small></button>
+    </div>
+    <div class="prog" id="prog"></div>
+    <div id="qs"></div>
+    <p class="tip">先自己想 → 不会再点「提示」→ 最后才看解析，这样学得最牢！</p>
+  </section>
+
+  <footer>由 AI 辅助制作 · 示例样品</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  function each(list,fn){for(var i=0;i<list.length;i++)fn(list[i],i);}
+
+  /* ---------- guess buttons ---------- */
+  each(document.querySelectorAll('.guess button'),function(b){
+    b.addEventListener('click',function(){
+      b.querySelector('b').innerHTML=b.getAttribute('data-a');
+      b.style.borderStyle='solid';
+    });
+  });
+
+  /* ---------- demo ---------- */
+  var H=5,L=14,step=0,timer=null;
+  function R(){return (L-2*H)/2;}
+  function total(){return 5+R();} // steps 0..4+R
+  function build(){
+    var pen=$('pen'),html='';
+    for(var i=0;i<H;i++){
+      html+='<div class="ani" id="a'+i+'">'+
+        '<span class="ear l"></span><span class="ear r"></span>'+
+        '<div class="hd" style="transition-delay:'+(i*70)+'ms"><span class="eye l"></span><span class="eye r"></span><span class="bk"></span></div>'+
+        '<span class="lg a" style="transition-delay:'+(i*60)+'ms"></span><span class="lg b" style="transition-delay:'+(i*60)+'ms"></span>'+
+        '<span class="lg c"></span><span class="lg d"></span>'+
+        '<div class="tg">🐔</div></div>';
+    }
+    pen.innerHTML=html;
+    var m='';for(var j=0;j<L-2*H;j++)m+='<i></i>';
+    $('miss').innerHTML=m;
+    $('qline').innerHTML='一共 '+H+' 个脑袋，'+L+' 条腿';
+    $('hv').innerHTML=H;$('lv').innerHTML=L;
+    var d='';for(var k=0;k<total();k++)d+='<i></i>';
+    $('dots').innerHTML=d;
+    each(document.querySelectorAll('#presets button'),function(b){
+      b.className=(+b.getAttribute('data-h')===H&&+b.getAttribute('data-l')===L)?'act':'';
+    });
+  }
+  function setOn(id,on){var e=$(id);if(!e)return;if(on)e.classList.add('on');else e.classList.remove('on');}
+  function render(prevStep){
+    var r=R(),c=H-r,last=total()-1;
+    var rs=step>=4?Math.min(step-3,r):0;
+    for(var i=0;i<H;i++){
+      var a=$('a'+i),cls='ani';
+      if(step>=1)cls+=' on';
+      if(step>=2)cls+=' l2';
+      var isR=i>=H-rs;
+      if(isR)cls+=' rb';
+      if(isR&&step>=4&&step<=3+r&&i===H-rs&&prevStep===step-1)cls+=' pop';
+      a.className=cls;
+      a.querySelector('.tg').innerHTML=isR?'🐰':'🐔';
+    }
+    var legs=step>=2?2*H+2*rs:0;
+    $('fill').style.width=(L?legs/L*100:0)+'%';
+    $('fill').className='fill'+(legs<L?' part':'');
+    $('mtxt').innerHTML=legs+' / '+L;
+    var mi=$('miss').children;
+    each(mi,function(x,j){x.className=j<2*rs?'f':'';});
+    $('miss').style.display=step>=3?'flex':'none';
+    var who='👧',msg='';
+    if(step===0){msg='动物屋里一共有 <b class="hl">'+H+'</b> 个脑袋、<b class="hl">'+L+'</b> 条腿。有几只鸡？几只兔？点「下一步」，我们用三步魔法来找答案！';}
+    else if(step===1){msg='<b>第①步 画头：</b>先画 <b class="hl">'+H+'</b> 个圆圈，每个圆圈代表 1 只小动物的脑袋。';}
+    else if(step===2){who='🦊';msg='<b>第②步 画腿：</b>假设全是鸡！每只鸡 2 条腿，'+H+' 只鸡一共 <b class="hl">'+(2*H)+'</b> 条腿。';}
+    else if(step===3){
+      if(r===0){who='🦊';msg='比一比：实际也是 '+L+' 条腿，一条都不少！说明全部都是鸡～';}
+      else{who='👧';msg='比一比：实际有 '+L+' 条腿，还少了 <b class="hl">'+(L-2*H)+'</b> 条（红色虚线）！少的腿要补上去。';}
+    }
+    else if(step<=3+r){who='🦊';msg='<b>第③步 补腿：</b>给一只鸡补 2 条腿，它就变成了兔子！🐰 这是第 <b class="hl">'+rs+'</b> 只兔子，现在 '+legs+' 条腿'+(legs<L?'，还差 '+(L-legs)+' 条。':'，正好够啦！');}
+    else{who='👧';msg='🎉 答对啦！一共 <b class="hl">'+c+'</b> 只鸡，<b class="hl">'+r+'</b> 只兔。<br>验算：'+c+'×2 + '+r+'×4 = '+(2*c)+' + '+(4*r)+' = '+L+' 条腿 ✅';}
+    $('who').innerHTML=who;$('msg').innerHTML=msg;
+    each($('dots').children,function(x,j){x.className=j===step?'on':'';});
+    setOn('f1',step===1);setOn('f2',step===2);setOn('f3',step>=3&&step<last);
+    setOn('c1',step===1);setOn('c2',step===2);setOn('c3',step===3);setOn('c4',step>=4&&step<last);
+    $('e1').innerHTML='① 假设全是鸡：'+H+' × 2 = '+(2*H)+'（条）';
+    $('e2').innerHTML='② 少了几条腿：'+L+' − '+(2*H)+' = '+(L-2*H)+'（条）';
+    $('e3').innerHTML='③ 每补 2 条变一只兔：'+(L-2*H)+' ÷ 2 = '+r+'（只兔）';
+    $('e4').innerHTML='④ 鸡的只数：'+H+' − '+r+' = '+c+'（只鸡）';
+    $('e5').innerHTML='<span class="ok">✔ 验算：'+c+'×2 + '+r+'×4 = '+L+'</span>';
+    setOn('e1',step>=2);setOn('e2',step>=3);setOn('e3',step>=4&&step>=3+r||step===last);setOn('e4',step===last);setOn('e5',step===last);
+    $('prev').disabled=step===0;$('next').disabled=step===last;
+  }
+  function go(s){var p=step;step=Math.max(0,Math.min(total()-1,s));render(p);}
+  function stop(){if(timer){clearInterval(timer);timer=null;}$('play').innerHTML='▶ 自动';}
+  $('next').addEventListener('click',function(){stop();go(step+1);});
+  $('prev').addEventListener('click',function(){stop();go(step-1);});
+  $('play').addEventListener('click',function(){
+    if(timer){stop();return;}
+    if(step>=total()-1)go(0);
+    $('play').innerHTML='⏸ 暂停';
+    timer=setInterval(function(){if(step>=total()-1){stop();return;}go(step+1);},1300);
+  });
+  function reset(h,l){
+    stop();H=h;L=l;
+    if(L<2*H)L=2*H;if(L>4*H)L=4*H;
+    build();step=0;render(-1);
+    setTimeout(function(){go(1);},60);
+  }
+  $('hm').addEventListener('click',function(){if(H>1)reset(H-1,L);});
+  $('hp').addEventListener('click',function(){if(H<12)reset(H+1,L);});
+  $('lm').addEventListener('click',function(){if(L-2>=2*H)reset(H,L-2);else toast('腿不能再少啦<br>最少 '+(2*H)+' 条（全是鸡）');});
+  $('lp').addEventListener('click',function(){if(L+2<=4*H)reset(H,L+2);else toast('腿不能再多啦<br>最多 '+(4*H)+' 条（全是兔）');});
+  each(document.querySelectorAll('#presets button'),function(b){
+    b.addEventListener('click',function(){reset(+b.getAttribute('data-h'),+b.getAttribute('data-l'));});
+  });
+  build();render(-1);
+
+  /* ---------- toast & confetti ---------- */
+  var tt=null;
+  function toast(t){var e=$('toast');e.innerHTML=t;e.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('show');},1500);}
+  function confetti(){
+    var em=['🎉','⭐','🐰','🐔','🥕','✨'];
+    for(var i=0;i<16;i++){
+      var s=document.createElement('div');s.className='confetti';
+      s.innerHTML=em[i%em.length];s.style.left=(Math.random()*92)+'vw';
+      s.style.animationDelay=(Math.random()*.5)+'s';s.style.webkitAnimationDelay=s.style.animationDelay;
+      document.body.appendChild(s);
+      (function(x){setTimeout(function(){if(x.parentNode)x.parentNode.removeChild(x);},2400);})(s);
+    }
+  }
+
+  /* ---------- practice ---------- */
+  var LV=[
+    [
+      {tag:'鸡兔同笼',q:'动物屋里一共有 4 个脑袋，10 条腿。鸡和兔各有几只？',lab:['鸡','兔'],u:'只',a:[3,1],
+       h:['先画 4 个圆圈，每个圈先画 2 条腿（假设全是鸡），一共几条腿？','4 只鸡有 8 条腿，比 10 条少了几条？每补 2 条腿，就变出一只兔。'],
+       s:['画头：画 4 个圈。','画腿：假设全是鸡，4 × 2 = 8（条）。','补腿：10 − 8 = 2（条），补 2 条 → 1 只兔。','鸡：4 − 1 = 3（只）。','验算：3×2 + 1×4 = 6 + 4 = 10 ✔']},
+      {tag:'鸡兔同笼',q:'笼子里有鸡和兔一共 6 只，一共有 16 条腿。鸡和兔各有几只？',lab:['鸡','兔'],u:'只',a:[4,2],
+       h:['假设 6 只全是鸡，一共有几条腿？','6 × 2 = 12 条，比 16 条少几条？每补 2 条变一只兔。'],
+       s:['画头：画 6 个圈。','画腿：假设全是鸡，6 × 2 = 12（条）。','补腿：16 − 12 = 4（条），每补 2 条一只兔，4 ÷ 2 = 2（只兔）。','鸡：6 − 2 = 4（只）。','验算：4×2 + 2×4 = 8 + 8 = 16 ✔']},
+      {tag:'鸡兔同笼',q:'农场里鸡和兔一共 8 只，一共有 20 条腿。鸡和兔各有几只？',lab:['鸡','兔'],u:'只',a:[6,2],
+       h:['8 只全是鸡的话，有几条腿？','8 × 2 = 16 条，还少 20 − 16 = 4 条，能变出几只兔？'],
+       s:['画头：画 8 个圈。','画腿：假设全是鸡，8 × 2 = 16（条）。','补腿：20 − 16 = 4（条），4 ÷ 2 = 2（只兔）。','鸡：8 − 2 = 6（只）。','验算：6×2 + 2×4 = 12 + 8 = 20 ✔']}
+    ],
+    [
+      {tag:'自行车和三轮车',q:'停车场有自行车和三轮车一共 6 辆，一共有 14 个轮子。自行车和三轮车各有几辆？',lab:['自行车','三轮车'],u:'辆',a:[4,2],
+       h:['把「辆」当成「头」，「轮子」当成「腿」。假设全是自行车，有几个轮子？','6 × 2 = 12 个，少了 2 个。注意：自行车变三轮车只要补 1 个轮子哦！'],
+       s:['画头：6 辆车画 6 个圈。','假设全是自行车：6 × 2 = 12（个轮子）。','少了：14 − 12 = 2（个）。','每辆自行车补 1 个轮子变成三轮车：2 ÷ 1 = 2（辆三轮车）。','自行车：6 − 2 = 4（辆）。','验算：4×2 + 2×3 = 8 + 6 = 14 ✔']},
+      {tag:'租船问题',q:'一共租了 6 条船，坐了 18 人。大船每条坐 4 人，小船每条坐 2 人。大船和小船各有几条？',lab:['大船','小船'],u:'条',a:[3,3],
+       h:['大船就像「兔」（4），小船就像「鸡」（2）。假设全是小船，能坐几人？','6 × 2 = 12 人，少了 6 人。小船换成大船，每条多坐几人？'],
+       s:['假设全是小船：6 × 2 = 12（人）。','少了：18 − 12 = 6（人）。','每把一条小船换成大船，多坐 4 − 2 = 2（人）：6 ÷ 2 = 3（条大船）。','小船：6 − 3 = 3（条）。','验算：3×4 + 3×2 = 12 + 6 = 18 ✔']},
+      {tag:'鸭子和小狗',q:'院子里有鸭子和小狗一共 7 只，一共有 22 条腿。鸭子和小狗各有几只？',lab:['鸭子','小狗'],u:'只',a:[3,4],
+       h:['鸭子 2 条腿像鸡，小狗 4 条腿像兔。假设全是鸭子，有几条腿？','7 × 2 = 14 条，少了 22 − 14 = 8 条，每补 2 条变一只小狗。'],
+       s:['画头：画 7 个圈。','假设全是鸭子：7 × 2 = 14（条）。','少了：22 − 14 = 8（条）。','每补 2 条变一只小狗：8 ÷ 2 = 4（只小狗）。','鸭子：7 − 4 = 3（只）。','验算：3×2 + 4×4 = 6 + 16 = 22 ✔']}
+    ],
+    [
+      {tag:'反过来想',q:'鸡和兔一共 5 只，有 16 条腿。这次试试「假设全是兔」，鸡和兔各有几只？',lab:['鸡','兔'],u:'只',a:[2,3],
+       h:['假设 5 只全是兔，一共有几条腿？比 16 条多了还是少了？','5 × 4 = 20 条，多了 4 条。每把一只兔变成鸡，就要「擦掉」2 条腿。'],
+       s:['假设全是兔：5 × 4 = 20（条）。','多了：20 − 16 = 4（条）。','每只兔变鸡少 2 条腿：4 ÷ 2 = 2（只鸡）。','兔：5 − 2 = 3（只）。','验算：2×2 + 3×4 = 4 + 12 = 16 ✔','💡 两种假设答案一样，「假设全是鸡」和「假设全是兔」都可以！']},
+      {tag:'三轮车和小汽车',q:'停车场有三轮车和小汽车一共 5 辆，一共有 17 个轮子（小汽车 4 个轮子）。三轮车和小汽车各有几辆？',lab:['三轮车','小汽车'],u:'辆',a:[3,2],
+       h:['假设全是三轮车，有几个轮子？','5 × 3 = 15 个，少了 2 个。三轮车变小汽车，每辆补几个轮子？（4 − 3 = 1）'],
+       s:['假设全是三轮车：5 × 3 = 15（个）。','少了：17 − 15 = 2（个）。','每辆三轮车变小汽车补 4 − 3 = 1（个）：2 ÷ 1 = 2（辆小汽车）。','三轮车：5 − 2 = 3（辆）。','验算：3×3 + 2×4 = 9 + 8 = 17 ✔']},
+      {tag:'钱币问题',q:'小明有 1 元和 2 元的纸币一共 8 张，一共是 13 元。1 元和 2 元的纸币各有几张？',lab:['1元','2元'],u:'张',a:[3,5],
+       h:['「张数」就是「头」，「钱数」就是「腿」。假设全是 1 元，一共多少钱？','8 × 1 = 8 元，少了 5 元。每把一张 1 元换成 2 元，多 1 元。'],
+       s:['假设全是 1 元：8 × 1 = 8（元）。','少了：13 − 8 = 5（元）。','每张 1 元换成 2 元多 1 元：5 ÷ 1 = 5（张 2 元）。','1 元：8 − 5 = 3（张）。','验算：3×1 + 5×2 = 3 + 10 = 13 ✔']}
+    ]
+  ];
+  var done={},cur=0;
+  function prog(){
+    var n=0,t=0;for(var k in done)if(done[k])n++;
+    each(LV,function(l){t+=l.length;});
+    var st='';for(var i=0;i<t;i++)st+=i<n?'★':'☆';
+    $('prog').innerHTML='已答对 '+n+' / '+t+' 题 <span class="stars">'+st+'</span>';
+  }
+  function showLv(lv){
+    cur=lv;
+    each(document.querySelectorAll('#tabs button'),function(b,i){b.className=i===lv?'act':'';});
+    var html='',colors=['#7bc94f','#ff8a3d','#9b6bd6'];
+    each(LV[lv],function(q,i){
+      var id=lv+'_'+i,sol='<ol>';
+      each(q.s,function(x){sol+='<li>'+x+'</li>';});
+      sol+='</ol><b>答：'+q.lab[0]+' '+q.a[0]+' '+q.u+'，'+q.lab[1]+' '+q.a[1]+' '+q.u+'。</b>';
+      html+='<div class="card q" style="border-left-color:'+colors[lv]+'" data-id="'+id+'">'+
+        '<div class="qh"><span class="qn">第 '+(i+1)+' 题</span><span class="qtag">'+q.tag+'</span></div>'+
+        '<div class="qt">'+q.q+'</div>'+
+        '<div class="ans"><label>'+q.lab[0]+'<input type="number" inputmode="numeric" pattern="[0-9]*" min="0"> '+q.u+'</label>'+
+        '<label>'+q.lab[1]+'<input type="number" inputmode="numeric" pattern="[0-9]*" min="0"> '+q.u+'</label>'+
+        '<button class="btn gr ck">检查</button></div>'+
+        '<div class="fb"></div>'+
+        '<div class="qbtns"><button class="h1">💡 提示1</button><button class="h2" disabled>💡 提示2</button><button class="sol" disabled>📖 看解析</button></div>'+
+        '<div class="hint hh1"><b>提示1：</b>'+q.h[0]+'</div>'+
+        '<div class="hint hh2"><b>提示2：</b>'+q.h[1]+'</div>'+
+        '<div class="solution">'+sol+'</div></div>';
+    });
+    $('qs').innerHTML=html;
+    each(document.querySelectorAll('#qs .q'),function(card,i){
+      var q=LV[lv][i],id=card.getAttribute('data-id');
+      var ins=card.querySelectorAll('input'),fb=card.querySelector('.fb');
+      var b1=card.querySelector('.h1'),b2=card.querySelector('.h2'),bs=card.querySelector('.sol');
+      b1.addEventListener('click',function(){card.querySelector('.hh1').classList.add('show');b2.disabled=false;});
+      b2.addEventListener('click',function(){card.querySelector('.hh2').classList.add('show');bs.disabled=false;});
+      bs.addEventListener('click',function(){card.querySelector('.solution').classList.add('show');});
+      if(done[id]){ins[0].value=q.a[0];ins[1].value=q.a[1];fb.className='fb ok';fb.innerHTML='✅ 已答对！';b2.disabled=false;bs.disabled=false;}
+      card.querySelector('.ck').addEventListener('click',function(){
+        var x=ins[0].value,y=ins[1].value;
+        if(x===''||y===''){fb.className='fb no';fb.innerHTML='两个空都要填哦～';return;}
+        if(+x===q.a[0]&&+y===q.a[1]){
+          fb.className='fb ok';fb.innerHTML='✅ 太棒了，完全正确！可以点「看解析」对一对思路。';
+          b2.disabled=false;bs.disabled=false;
+          if(!done[id]){done[id]=true;prog();confetti();toast('答对啦！🎉');}
+        }else{
+          var tot=q.a[0]+q.a[1];
+          fb.className='fb no';
+          fb.innerHTML=(+x+(+y)!==tot)?'🤔 再想想：两个数加起来应该等于总数 '+tot+' 哦。先点「提示1」看看？':'🤔 总数对了，但还不对，验算一下腿（轮子/人数）对不对？可以看看提示。';
+        }
+      });
+    });
+    prog();
+  }
+  each(document.querySelectorAll('#tabs button'),function(b,i){b.addEventListener('click',function(){showLv(i);});});
+  showLv(0);
+
+  /* ---------- nav highlight ---------- */
+  var links=document.querySelectorAll('#nav a');
+  function onScroll(){
+    var y=window.pageYOffset+90,act=0;
+    each(['s1','s2','s3'],function(s,i){if($(s).offsetTop<=y)act=i;});
+    each(links,function(a,i){a.className=i===act?'act':'';});
+  }
+  window.addEventListener('scroll',onScroll);
+  each(links,function(a){a.addEventListener('click',function(e){
+    e.preventDefault();var t=$(a.getAttribute('href').slice(1));
+    window.scrollTo(0,t.offsetTop-56);
+  });});
+})();
+</script>
+</body>
+</html>
